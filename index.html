@@ -1,1 +1,347 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>SCP — Sunset Cyber Party · Visual System</title>
+<meta name="description" content="Sistema de identidade visual da SCP — Sunset Cyber Party. Conceito, logo, cores, tipografia, HUD, componentes, movimento e aplicações.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&family=Pattanakarn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:#05060A;
+  --void-2:#080D16;
+  --panel:#071421;
+  --scp:#0B63F6;
+  --cyan:#2BB8FF;
+  --cyan-hot:#63F6FF;
+  --white:#FFFFFF;
+  --ice:#DDF8FF;
+  --muted:#87A8B7;
+  --line:rgba(43,184,255,.28);
+  --line-hot:rgba(99,246,255,.72);
+  --glass:rgba(7,20,33,.68);
+  --success:#65F2CF;
+  --danger:#FF5D79;
+  --display:'Pattanakarn',system-ui,sans-serif;
+  --body:'Inter',system-ui,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+  --maxw:1240px;
+  --pad:clamp(20px,5vw,72px);
+  --cut:18px;
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;background:var(--void)}
+body{font-family:var(--body);background:var(--void);color:var(--white);line-height:1.5;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none} button{font:inherit} ::selection{background:var(--cyan);color:var(--void)}
+body::before{content:"";position:fixed;inset:0;z-index:9990;pointer-events:none;opacity:.18;background:repeating-linear-gradient(to bottom,transparent 0,transparent 3px,rgba(255,255,255,.035) 4px);mix-blend-mode:soft-light}
+body::after{content:"";position:fixed;inset:0;z-index:-3;pointer-events:none;background:radial-gradient(circle at 78% 10%,rgba(11,99,246,.18),transparent 28%),radial-gradient(circle at 18% 68%,rgba(43,184,255,.08),transparent 24%),linear-gradient(180deg,#05060A 0%,#04070D 100%)}
+.grid-bg{position:fixed;inset:0;z-index:-2;pointer-events:none;opacity:.16;background-image:linear-gradient(rgba(43,184,255,.16) 1px,transparent 1px),linear-gradient(90deg,rgba(43,184,255,.16) 1px,transparent 1px);background-size:56px 56px;mask-image:linear-gradient(to bottom,transparent,#000 12%,#000 82%,transparent)}
+.noise{position:fixed;inset:0;z-index:9989;pointer-events:none;opacity:.035;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.wrap{width:min(100%,var(--maxw));margin-inline:auto;padding-inline:var(--pad)}
+.boot{position:fixed;inset:0;z-index:12000;background:#020307;display:grid;place-items:center;transition:opacity .65s var(--ease),visibility .65s}
+.boot.off{opacity:0;visibility:hidden}
+.boot__inner{width:min(680px,calc(100vw - 40px))}
+.boot__row{font-family:var(--mono);font-size:clamp(.7rem,1.4vw,.9rem);letter-spacing:.08em;color:var(--muted);margin:8px 0}
+.boot__row b{color:var(--cyan-hot);font-weight:500}
+.boot__bar{height:3px;background:rgba(43,184,255,.14);margin:24px 0 12px;overflow:hidden;position:relative}
+.boot__bar::after{content:"";position:absolute;inset:0 auto 0 0;width:0;background:linear-gradient(90deg,var(--scp),var(--cyan-hot));box-shadow:0 0 18px var(--cyan);animation:boot 1.9s .2s forwards}
+@keyframes boot{to{width:100%}}
+.boot__status{font-family:var(--display);font-size:clamp(2rem,7vw,4.6rem);font-weight:500;line-height:.9;text-transform:uppercase;color:var(--white);text-shadow:0 0 24px rgba(43,184,255,.34)}
+.boot__skip{margin-top:22px;background:transparent;border:1px solid var(--line);color:var(--cyan);padding:10px 14px;cursor:pointer;font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase}
+header{position:fixed;top:0;left:0;right:0;z-index:8000;padding:15px clamp(14px,2.8vw,34px);transition:.35s var(--ease)}
+.hdr{max-width:1380px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:22px;border:1px solid transparent;padding:8px 10px;clip-path:polygon(12px 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%,0 12px);transition:.35s var(--ease)}
+header.scrolled .hdr{background:rgba(4,8,15,.86);backdrop-filter:blur(18px) saturate(140%);border-color:var(--line);box-shadow:0 18px 55px rgba(0,0,0,.42),0 0 24px rgba(11,99,246,.08)}
+.brand{display:flex;align-items:center;gap:13px;min-width:190px}
+.brand img{display:block;width:92px;height:36px;object-fit:cover;object-position:center 50%;filter:drop-shadow(0 0 8px rgba(43,184,255,.25))}
+.brand__meta{border-left:1px solid var(--line);padding-left:12px;font-family:var(--mono);font-size:.57rem;line-height:1.35;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+.nav{display:flex;align-items:center;gap:clamp(11px,1.5vw,22px);font-family:var(--mono);font-size:.59rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.nav a:hover{color:var(--cyan-hot);text-shadow:0 0 10px var(--cyan)}
+.status-dot{width:7px;height:7px;border-radius:50%;background:var(--success);box-shadow:0 0 12px var(--success);animation:pulse 1.8s infinite}
+@keyframes pulse{50%{opacity:.35}}
+@media(max-width:1040px){.nav{display:none}}
+.progress{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--scp),var(--cyan-hot));z-index:9000;width:0;box-shadow:0 0 12px var(--cyan)}
 
+.cover{min-height:100svh;position:relative;display:flex;align-items:flex-end;overflow:hidden;padding:160px 0 clamp(58px,8vw,108px);border-bottom:1px solid var(--line)}
+.cover__bg{position:absolute;inset:0;background:radial-gradient(circle at 58% 46%,rgba(11,99,246,.10),transparent 31%),radial-gradient(circle at 30% 72%,rgba(43,184,255,.055),transparent 24%),linear-gradient(180deg,#05060A 0%,#04070D 100%);background-color:#05060A;}
+.cover__matrix{position:absolute;inset:0;background-image:linear-gradient(90deg,transparent 49.5%,rgba(43,184,255,.08) 50%,transparent 50.5%),linear-gradient(transparent 49.5%,rgba(43,184,255,.06) 50%,transparent 50.5%);background-size:180px 180px;mask-image:radial-gradient(circle at 50% 55%,#000,transparent 76%)}
+.cover__scan{position:absolute;left:0;right:0;height:1px;top:22%;background:linear-gradient(90deg,transparent,var(--cyan-hot),transparent);box-shadow:0 0 20px var(--cyan);animation:scan 8s linear infinite;opacity:.52}
+@keyframes scan{0%{transform:translateY(-20vh)}100%{transform:translateY(85vh)}}
+.cover .wrap{position:relative;z-index:2}
+.kicker{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan-hot)}
+.kicker::before{content:"";width:30px;height:1px;background:var(--cyan);box-shadow:0 0 8px var(--cyan)}
+.cover__logo{display:block;width:min(800px,82vw);height:clamp(210px,24vw,280px);object-fit:cover;object-position:center 50%;margin:8px 0 16px;filter:drop-shadow(0 0 18px rgba(43,184,255,.28))}
+.cover h1{font-family:var(--display);font-weight:400;text-transform:uppercase;letter-spacing:.015em;font-size:clamp(2rem,5.4vw,4.3rem);line-height:.95;max-width:19ch;text-shadow:0 0 30px rgba(43,184,255,.1)}
+.cover h1 b{color:var(--cyan-hot);font-weight:600}
+.cover__meta{display:flex;flex-wrap:wrap;gap:12px 30px;margin-top:34px;font-family:var(--mono);font-size:.67rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.cover__meta span{display:flex;gap:8px} .cover__meta b{color:var(--white);font-weight:500}
+.hud-corner{position:absolute;width:96px;height:96px;opacity:.72;pointer-events:none}
+.hud-corner::before,.hud-corner::after{content:"";position:absolute;background:var(--cyan);box-shadow:0 0 10px rgba(43,184,255,.35)}
+.hud-corner::before{width:100%;height:1px} .hud-corner::after{width:1px;height:100%}
+.hud-corner.tl{left:3vw;top:100px} .hud-corner.tr{right:3vw;top:100px;transform:scaleX(-1)} .hud-corner.bl{left:3vw;bottom:28px;transform:scaleY(-1)} .hud-corner.br{right:3vw;bottom:28px;transform:scale(-1)}
+.sec{position:relative;padding-block:clamp(76px,9vw,132px);border-bottom:1px solid rgba(43,184,255,.14);overflow:hidden}
+.sec[id]{scroll-margin-top:86px}
+.sec::after{content:"";position:absolute;right:-10vw;top:16%;width:34vw;height:34vw;border:1px solid rgba(43,184,255,.07);transform:rotate(45deg);pointer-events:none}
+.sec__head{display:grid;grid-template-columns:100px 1fr;gap:18px 28px;margin-bottom:clamp(42px,6vw,72px);max-width:900px}
+.sec__num{grid-row:1/4;font-family:var(--mono);font-size:clamp(2.8rem,7vw,5rem);line-height:.8;color:rgba(43,184,255,.18);letter-spacing:-.08em}
+.sec__label{font-family:var(--mono);font-size:.65rem;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan)}
+.sec h2{font-family:var(--display);font-size:clamp(1.9rem,4.3vw,3.3rem);line-height:.98;text-transform:uppercase;font-weight:400;letter-spacing:.01em}
+.sec h2 em{font-style:normal;color:var(--cyan-hot);font-weight:600}
+.sec__lead{font-size:clamp(.98rem,1.5vw,1.13rem);line-height:1.68;color:#9bb2be;max-width:65ch}
+@media(max-width:680px){.sec__head{grid-template-columns:1fr}.sec__num{grid-row:auto;font-size:2.4rem}}
+.source-tag{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:.57rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);padding:6px 9px;clip-path:polygon(6px 0,100% 0,100% calc(100% - 6px),calc(100% - 6px) 100%,0 100%,0 6px)}
+.source-tag.core::before{content:"●";color:var(--success)} .source-tag.ext::before{content:"◇";color:var(--cyan)}
+.stack{display:flex;flex-direction:column;gap:clamp(42px,6vw,78px)}
+.block-title{font-family:var(--mono);font-size:.67rem;letter-spacing:.15em;text-transform:uppercase;color:var(--cyan);margin-bottom:18px}
+.panel{position:relative;background:linear-gradient(180deg,rgba(10,28,44,.72),rgba(6,14,24,.72));border:1px solid var(--line);padding:clamp(22px,3vw,34px);clip-path:polygon(var(--cut) 0,100% 0,100% calc(100% - var(--cut)),calc(100% - var(--cut)) 100%,0 100%,0 var(--cut));box-shadow:inset 0 0 40px rgba(11,99,246,.035)}
+.panel::before{content:"";position:absolute;left:10px;top:10px;width:22px;height:1px;background:var(--cyan);box-shadow:0 0 8px var(--cyan)}
+.panel__head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:20px;font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.panel__head b{color:var(--cyan-hot);font-weight:500}
+.cols-2{display:grid;grid-template-columns:1fr 1fr;gap:18px} .cols-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px} .cols-4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+@media(max-width:900px){.cols-4,.cols-3{grid-template-columns:1fr 1fr}}
+@media(max-width:650px){.cols-2,.cols-3,.cols-4{grid-template-columns:1fr}}
+.manifesto{font-family:var(--display);font-size:clamp(1.65rem,3.6vw,3rem);font-weight:400;line-height:1.12;max-width:26ch;text-transform:uppercase}
+.manifesto strong{font-weight:600;color:var(--cyan-hot)}
+.body{color:#9bb2be;line-height:1.7;max-width:65ch;font-size:.96rem} .body b{color:var(--white);font-weight:600}
+.param-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px} @media(max-width:760px){.param-grid{grid-template-columns:1fr}}
+.param h4{font-family:var(--display);font-size:1.3rem;font-weight:500;margin-bottom:12px;color:var(--ice)}
+.data-list{list-style:none;display:grid;gap:9px} .data-list li{font-size:.86rem;color:#a8c1cd;padding:8px 0 8px 20px;border-bottom:1px solid rgba(43,184,255,.09);position:relative} .data-list li::before{content:"[■]";position:absolute;left:0;color:var(--cyan);font-family:var(--mono);font-size:.55rem;top:12px}
+.lexicon{display:grid;gap:2px;border:1px solid var(--line);background:var(--line)}
+.lex-row{display:grid;grid-template-columns:1fr 70px 1.3fr;background:var(--void-2);padding:16px 20px;align-items:center} .lex-row .old{color:#5f7480} .lex-row .arrow{font-size:1.6rem;color:var(--cyan);text-align:center} .lex-row .new{font-family:var(--display);font-size:1.22rem;color:var(--cyan-hot)}
+@media(max-width:560px){.lex-row{grid-template-columns:1fr 34px 1.25fr;padding:13px 12px}.lex-row .new{font-size:1rem}}
+.voice-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px} @media(max-width:700px){.voice-grid{grid-template-columns:1fr}}
+.terminal-line{font-family:var(--mono);font-size:.78rem;color:#9ab2be;border-left:2px solid var(--cyan);padding:9px 0 9px 14px;margin:8px 0} .terminal-line b{color:var(--cyan-hot);font-weight:500}
+.logo-stage{min-height:320px;display:grid;place-items:center;background:radial-gradient(circle,rgba(43,184,255,.08),transparent 45%),#03060b;position:relative;border:1px solid var(--line);overflow:hidden}
+.logo-stage::before{content:"";position:absolute;inset:18px;border:1px dashed rgba(43,184,255,.22)}
+.logo-stage img{width:min(680px,86%);height:clamp(190px,24vw,280px);object-fit:cover;object-position:center 51%;position:relative;z-index:2;filter:drop-shadow(0 0 20px rgba(43,184,255,.32))}
+.logo-variants{display:grid;grid-template-columns:1fr 1fr;gap:16px} @media(max-width:680px){.logo-variants{grid-template-columns:1fr}}
+.logo-v{min-height:220px;display:grid;place-items:center;position:relative;border:1px solid var(--line);overflow:hidden} .logo-v img{width:min(420px,90%);height:145px;object-fit:cover;object-position:center 51%} .logo-v.dark{background:#020407} .logo-v.blue{background:linear-gradient(135deg,#0b63f6,#04152c)} .logo-v .caption{position:absolute;left:14px;bottom:12px;font-family:var(--mono);font-size:.58rem;color:var(--muted);letter-spacing:.09em;text-transform:uppercase}
+.rule-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px} @media(max-width:680px){.rule-grid{grid-template-columns:1fr}}
+.rule{border:1px solid var(--line);padding:22px;background:rgba(8,13,22,.52)} .rule h4{font-family:var(--mono);font-size:.7rem;letter-spacing:.11em;text-transform:uppercase;margin-bottom:12px} .rule.good h4{color:var(--success)} .rule.bad h4{color:var(--danger)} .rule ul{list-style:none;display:grid;gap:8px} .rule li{font-size:.85rem;color:#9bb2be;padding-left:15px;position:relative} .rule li::before{content:"›";position:absolute;left:0;color:var(--cyan)}
+.swatches{display:grid;grid-template-columns:repeat(4,1fr);gap:16px} @media(max-width:820px){.swatches{grid-template-columns:1fr 1fr}} @media(max-width:480px){.swatches{grid-template-columns:1fr}}
+.sw{border:1px solid var(--line);cursor:pointer;background:rgba(7,20,33,.4);transition:.25s var(--ease);clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px)} .sw:hover{transform:translateY(-4px);border-color:var(--line-hot);box-shadow:0 10px 35px rgba(11,99,246,.16)} .sw__chip{height:145px;position:relative} .sw__chip::after{content:"COPY HEX";position:absolute;right:10px;bottom:8px;font-family:var(--mono);font-size:.52rem;letter-spacing:.08em;color:rgba(255,255,255,.72)} .sw__body{padding:15px} .sw__name{font-family:var(--display);font-size:1rem} .sw__hex{font-family:var(--mono);font-size:.72rem;color:var(--cyan);margin-top:3px} .sw__use{font-size:.74rem;color:var(--muted);margin-top:8px;line-height:1.45}
+.ratio{display:grid;grid-template-columns:5fr 2fr 1.4fr .8fr;height:42px;overflow:hidden;border:1px solid var(--line)} .ratio div{display:grid;place-items:center;font-family:var(--mono);font-size:.56rem;letter-spacing:.08em;text-transform:uppercase} .ratio .r1{background:#05060A} .ratio .r2{background:#0B63F6} .ratio .r3{background:#2BB8FF;color:#03101a} .ratio .r4{background:#fff;color:#05060A}
+.type-spec{border:1px solid var(--line);padding:clamp(24px,4vw,42px);background:rgba(7,20,33,.4)} .type-spec+.type-spec{margin-top:16px} .type-meta{font-family:var(--mono);font-size:.63rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:22px} .type-display{font-family:var(--display);font-size:clamp(3rem,8vw,6rem);line-height:.9;color:var(--ice);text-shadow:0 0 22px rgba(43,184,255,.17)} .type-body{font-family:var(--body);font-size:clamp(2rem,5vw,4rem);font-weight:300;line-height:1} .type-mono{font-family:var(--mono);font-size:clamp(1.35rem,3vw,2.4rem);color:var(--cyan)}
+.type-scale{display:grid;gap:0;border:1px solid var(--line)} .ts{display:grid;grid-template-columns:140px 1fr;gap:20px;padding:17px;border-bottom:1px solid rgba(43,184,255,.11);align-items:baseline} .ts:last-child{border:0} .ts label{font-family:var(--mono);font-size:.6rem;color:var(--muted);text-transform:uppercase} @media(max-width:560px){.ts{grid-template-columns:1fr}}
+.hud-kit{display:grid;grid-template-columns:repeat(3,1fr);gap:18px} @media(max-width:800px){.hud-kit{grid-template-columns:1fr}}
+.hud-demo{min-height:220px;border:1px solid var(--line);position:relative;padding:22px;overflow:hidden;background:linear-gradient(135deg,rgba(11,99,246,.06),transparent 52%)} .hud-demo h4{font-family:var(--display);font-size:1.1rem;color:var(--ice);margin-top:24px} .hud-demo p{font-size:.76rem;color:var(--muted);margin-top:9px;max-width:28ch} .hud-demo .mini{font-family:var(--mono);font-size:.54rem;color:var(--cyan);letter-spacing:.1em;text-transform:uppercase}
+.brackets{position:absolute;inset:16px;border:1px solid transparent;background:linear-gradient(var(--void-2),var(--void-2)) padding-box,linear-gradient(90deg,var(--cyan),transparent 30%,transparent 70%,var(--cyan)) border-box;clip-path:polygon(12px 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%,0 12px)}
+.circuit{position:absolute;inset:0;opacity:.3;background-image:linear-gradient(90deg,transparent 0 42%,var(--cyan) 42% 42.5%,transparent 42.5%),linear-gradient(0deg,transparent 0 62%,var(--scp) 62% 62.5%,transparent 62.5%);background-size:54px 54px;mask-image:linear-gradient(135deg,#000,transparent 78%)}
+.wave-img{position:absolute;left:20px;right:20px;bottom:18px;width:calc(100% - 40px);height:70px;object-fit:cover;opacity:.78;filter:drop-shadow(0 0 8px var(--scp))}
+.syntax{display:grid;gap:12px} .syntax-card{display:grid;grid-template-columns:42px 1fr auto;gap:14px;align-items:center;border:1px solid var(--line);padding:16px;background:rgba(7,20,33,.36)} .syntax-card .idx{font-family:var(--mono);color:var(--cyan);font-size:.7rem} .syntax-card b{font-family:var(--display);font-size:1rem;font-weight:500} .syntax-card code{font-family:var(--mono);color:var(--muted);font-size:.62rem} @media(max-width:600px){.syntax-card{grid-template-columns:32px 1fr}.syntax-card code{grid-column:2}}
+.comp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px} @media(max-width:850px){.comp-grid{grid-template-columns:1fr}}
+.comp{border:1px solid var(--line);padding:20px;min-height:230px;background:rgba(7,20,33,.42);position:relative;overflow:hidden} .comp-label{font-family:var(--mono);font-size:.58rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px}
+.artist-ui{border:1px solid var(--line-hot);padding:16px;position:relative;background:rgba(3,8,14,.72);box-shadow:inset 0 0 24px rgba(43,184,255,.06)} .artist-ui .scan{font-family:var(--mono);font-size:.56rem;color:var(--cyan);letter-spacing:.08em} .artist-ui strong{display:block;font-family:var(--display);font-size:1.6rem;margin:17px 0 8px;text-transform:uppercase} .artist-ui .row{display:flex;justify-content:space-between;border-top:1px solid var(--line);padding-top:8px;font-family:var(--mono);font-size:.55rem;color:var(--muted)} .artist-ui .row b{color:var(--cyan-hot)}
+.access-card{border:1px solid var(--cyan);padding:18px;clip-path:polygon(16px 0,100% 0,100% calc(100% - 16px),calc(100% - 16px) 100%,0 100%,0 16px);background:linear-gradient(110deg,rgba(11,99,246,.12),rgba(43,184,255,.02))} .access-card .codebig{font-family:var(--display);font-size:2.4rem;color:var(--cyan-hot)} .access-card small{font-family:var(--mono);font-size:.56rem;color:var(--muted);letter-spacing:.11em;text-transform:uppercase}
+.btn{display:inline-flex;align-items:center;gap:10px;background:transparent;color:var(--cyan-hot);border:1px solid var(--cyan);padding:12px 16px;font-family:var(--mono);font-size:.64rem;letter-spacing:.11em;text-transform:uppercase;cursor:pointer;clip-path:polygon(8px 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%,0 8px);box-shadow:inset 0 0 18px rgba(43,184,255,.05);transition:.25s} .btn:hover{background:rgba(43,184,255,.1);box-shadow:0 0 22px rgba(43,184,255,.14)} .btn::after{content:"↗"}
+.photo-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:18px} @media(max-width:760px){.photo-grid{grid-template-columns:1fr}}
+.photo-demo{min-height:470px;position:relative;border:1px solid var(--line);overflow:hidden;background:#03060a} .photo-demo img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center bottom;filter:saturate(.42) contrast(1.08) drop-shadow(0 0 9px rgba(43,184,255,.65))} .photo-demo::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,99,246,.08),rgba(5,6,10,.3)),linear-gradient(90deg,rgba(11,99,246,.18),transparent 28%);mix-blend-mode:screen;pointer-events:none} .photo-demo .photo-ui{position:absolute;left:18px;right:18px;top:18px;bottom:18px;border:1px solid rgba(43,184,255,.5);z-index:3;pointer-events:none} .photo-demo .photo-ui span{position:absolute;left:12px;top:10px;font-family:var(--mono);font-size:.55rem;color:var(--cyan-hot);letter-spacing:.1em}
+.motion-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px} @media(max-width:900px){.motion-grid{grid-template-columns:1fr 1fr}} @media(max-width:480px){.motion-grid{grid-template-columns:1fr}}
+.motion{height:190px;border:1px solid var(--line);position:relative;overflow:hidden;background:#03060a;padding:16px} .motion h4{position:relative;z-index:2;font-family:var(--mono);font-size:.61rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase} .motion .m-center{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--display);font-size:1.6rem;color:var(--cyan-hot)} .m-scan::after{content:"";position:absolute;left:0;right:0;height:1px;background:var(--cyan-hot);box-shadow:0 0 12px var(--cyan);animation:localScan 2.8s linear infinite} @keyframes localScan{from{top:0}to{top:100%}} .m-load .m-center::after{content:"";position:absolute;width:100px;height:2px;background:rgba(43,184,255,.15);bottom:50px;left:50%;transform:translateX(-50%);box-shadow:inset 40px 0 var(--cyan)} .m-pulse .m-center{text-shadow:0 0 6px var(--cyan),0 0 16px var(--scp);animation:glowPulse 1.7s infinite} @keyframes glowPulse{50%{opacity:.55;text-shadow:none}} .m-cursor .m-center::after{content:"_";animation:blink .8s steps(1) infinite} @keyframes blink{50%{opacity:0}}
+.layout-demo{display:grid;grid-template-columns:1.2fr .8fr;gap:16px;min-height:420px} @media(max-width:700px){.layout-demo{grid-template-columns:1fr}} .layout-zone{border:1px solid var(--line);padding:20px;position:relative;background:rgba(7,20,33,.35)} .layout-zone .zone{position:absolute;font-family:var(--mono);font-size:.53rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase} .layout-zone .z1{top:14px;left:14px} .layout-zone .z2{right:14px;top:14px} .layout-zone .z3{left:14px;bottom:14px} .layout-zone .z4{right:14px;bottom:14px} .hero-zone{display:flex;align-items:center;justify-content:center;text-align:center} .hero-zone strong{font-family:var(--display);font-size:clamp(2rem,5vw,4.5rem);line-height:.92;text-transform:uppercase} .hero-zone strong b{color:var(--cyan-hot)}
+.apps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;align-items:start} @media(max-width:950px){.apps{grid-template-columns:1fr 1fr}} @media(max-width:520px){.apps{grid-template-columns:1fr}}
+.app{border:1px solid var(--line);background:rgba(7,20,33,.35);overflow:hidden} .app__frame{aspect-ratio:4/5;position:relative;background:linear-gradient(180deg,#02050a,#071521);overflow:hidden;padding:15px} .app__frame.story{aspect-ratio:9/16} .app__frame.wide{aspect-ratio:16/9} .app__hud{position:absolute;inset:12px;border:1px solid rgba(43,184,255,.5);clip-path:polygon(9px 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%,0 9px)} .app__top{position:absolute;top:22px;left:24px;font-family:var(--mono);font-size:.45rem;color:var(--cyan);letter-spacing:.1em} .app__main{position:absolute;left:24px;right:24px;bottom:28px;z-index:3} .app__main small{font-family:var(--mono);font-size:.45rem;color:var(--cyan);letter-spacing:.1em} .app__main h5{font-family:var(--display);font-size:clamp(1.1rem,2vw,1.55rem);line-height:.98;text-transform:uppercase;margin-top:7px} .app__main h5 b{color:var(--cyan-hot)} .app__body{padding:14px 15px} .app__body b{font-size:.82rem} .app__body p{font-size:.72rem;color:var(--muted);margin-top:6px}
+.lineup-mini{position:absolute;inset:58px 23px 70px;display:grid;gap:6px;align-content:center} .lineup-mini div{display:grid;grid-template-columns:38px 1fr auto;gap:8px;border-bottom:1px solid var(--line);padding:7px 0;font-family:var(--mono);font-size:.43rem;color:var(--muted)} .lineup-mini b{color:var(--white);font-weight:500} .lineup-mini i{font-style:normal;color:var(--cyan)}
+.checklist{display:grid;grid-template-columns:1fr 1fr;gap:16px} @media(max-width:700px){.checklist{grid-template-columns:1fr}}
+.check{border:1px solid var(--line);padding:25px;background:rgba(7,20,33,.34)} .check h3{font-family:var(--display);font-size:1.25rem;margin-bottom:14px} .check ul{list-style:none;display:grid;gap:10px} .check li{font-size:.84rem;color:#9db6c1;padding-left:20px;position:relative} .check.ok li::before{content:"[+]";position:absolute;left:0;color:var(--success);font-family:var(--mono);font-size:.6rem;top:3px} .check.no li::before{content:"[x]";position:absolute;left:0;color:var(--danger);font-family:var(--mono);font-size:.6rem;top:3px}
+.code{border:1px solid var(--line);background:#02050a;overflow:hidden} .code__bar{display:flex;justify-content:space-between;align-items:center;gap:15px;padding:12px 15px;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:.6rem;color:var(--muted)} .code__bar button{border:1px solid var(--line);background:transparent;color:var(--cyan);font-family:var(--mono);font-size:.56rem;padding:7px 10px;cursor:pointer} .code pre{padding:20px;overflow:auto;font-family:var(--mono);font-size:.72rem;line-height:1.7;color:#b9d2dc} .tok-k{color:var(--cyan)} .tok-v{color:#dffcff} .tok-c{color:#526a75}
+footer{padding:55px 0 70px;border-top:1px solid var(--line);background:#020407} .foot{display:flex;justify-content:space-between;gap:20px;align-items:center;flex-wrap:wrap} .foot img{display:block;width:116px;height:46px;object-fit:cover;object-position:center 50%} .foot p{font-family:var(--mono);font-size:.58rem;color:var(--muted);letter-spacing:.09em;text-transform:uppercase}
+.toast{position:fixed;left:50%;bottom:24px;z-index:10000;transform:translate(-50%,16px);opacity:0;background:var(--cyan);color:#03101a;padding:11px 17px;border:1px solid var(--cyan-hot);font-family:var(--mono);font-size:.65rem;letter-spacing:.07em;transition:.25s var(--ease);pointer-events:none} .toast.show{opacity:1;transform:translate(-50%,0)}
+.ir{opacity:0;transform:translateY(20px);transition:opacity .65s var(--ease),transform .65s var(--ease)} .ir.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01ms!important}.ir{opacity:1;transform:none}}
+
+@media(max-width:700px){
+  .logo-stage{min-height:230px}
+  .logo-stage img{width:88%;height:145px}
+  .logo-v img{width:92%;height:120px}
+  .foot img{width:92px;height:38px}
+}
+@media(max-width:430px){
+  .cover__logo{width:94vw;height:clamp(135px,30vw,190px)}
+  .logo-stage img{height:125px}
+}
+
+/* --- Mobile usability patch --- */
+@media (max-width: 700px){
+  :root{ --pad:18px; --cut:14px; }
+  body{ overflow-x:hidden; }
+  header{ padding:8px 8px 0; }
+  .hdr{ padding:7px 8px; gap:10px; }
+  .brand{ min-width:0; gap:9px; }
+  .brand img{ width:76px; height:30px; }
+  .brand__meta{ font-size:.49rem; padding-left:8px; }
+  .cover{ min-height:100svh; padding:112px 0 58px; }
+  .cover__logo{ width:90vw; height:clamp(160px,28vw,220px); margin:6px 0 10px; }
+  .cover__meta{ gap:8px 16px; font-size:.60rem; }
+  .sec{ padding-block:64px; }
+  .sec__head{ margin-bottom:36px; }
+  .panel{ padding:20px; }
+  .code pre, pre{ overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  button, .btn, a{ -webkit-tap-highlight-color:transparent; }
+  button, .btn{ min-height:44px; }
+  .toast{ bottom:18px; left:18px; right:18px; text-align:center; }
+}
+@media (max-width: 430px){
+  .cover h1{ font-size:1.9rem; }
+  .manifesto{ font-size:1.55rem; }
+  .type-display{ font-size:2.55rem; }
+  .swatches{ grid-template-columns:1fr; }
+}
+
+
+/* --- Final image sizing: preserve supplied logo artwork without oversized transparent margins --- */
+.brand img{
+  width:92px;
+  height:36px;
+  object-fit:cover;
+  object-position:center 50%;
+}
+.cover__logo{
+  width:min(800px,82vw);
+  height:clamp(210px,24vw,280px);
+  object-fit:cover;
+  object-position:center 50%;
+  margin:8px 0 16px;
+}
+.logo-stage img{
+  width:min(680px,86%);
+  height:clamp(190px,24vw,280px);
+  object-fit:cover;
+  object-position:center 50%;
+}
+.logo-v img{
+  width:min(420px,90%);
+  height:145px;
+  object-fit:cover;
+  object-position:center 50%;
+}
+.foot img{
+  width:116px;
+  height:46px;
+  object-fit:cover;
+  object-position:center 50%;
+}
+@media (max-width:700px){
+  .brand img{width:76px;height:30px}
+  .cover__logo{width:90vw;height:clamp(160px,28vw,220px);margin:6px 0 10px}
+  .logo-stage{min-height:230px}
+  .logo-stage img{width:88%;height:145px}
+  .logo-v img{width:92%;height:120px}
+  .foot img{width:92px;height:38px}
+}
+@media (max-width:430px){
+  .cover__logo{width:94vw;height:165px}
+  .logo-stage img{height:125px}
+}
+
+</style>
+</head>
+<body>
+<div class="grid-bg" aria-hidden="true"></div><div class="noise" aria-hidden="true"></div><div class="progress" id="progress"></div>
+<div class="boot" id="boot"><div class="boot__inner"><div class="boot__row">SCP_KERNEL <b>ONLINE</b></div><div class="boot__row">VISUAL_SYSTEM <b>INITIALIZING</b></div><div class="boot__row">ACCESS_LEVEL <b>BRAND / ADMIN</b></div><div class="boot__bar"></div><div class="boot__status">ACCESS<br>GRANTED.</div><button class="boot__skip" id="bootSkip">ENTER SYSTEM →</button></div></div>
+<header id="hdr"><div class="hdr"><a class="brand" href="#topo"><img src="IMG/IMG_8160.PNG" alt="SCP"><span class="brand__meta">Visual System<br>v1.0</span></a><nav class="nav"><span class="status-dot"></span><a href="#sistema">System</a><a href="#linguagem">Language</a><a href="#logo">Logo</a><a href="#cores">Colors</a><a href="#tipo">Type</a><a href="#hud">HUD</a><a href="#componentes">UI Kit</a><a href="#aplicacoes">Apps</a></nav></div></header>
+
+<section class="cover" id="topo"><div class="cover__bg"></div><div class="cover__matrix"></div><div class="cover__scan"></div><i class="hud-corner tl"></i><i class="hud-corner tr"></i><i class="hud-corner bl"></i><i class="hud-corner br"></i><div class="wrap"><span class="kicker">SCP Visual Operating System · v1.0</span><img class="cover__logo" src="IMG/IMG_8160.PNG" alt="SCP — Sunset Cyber Party"><h1>Manual de marca como <b>interface do próprio sistema.</b></h1><div class="cover__meta"><span>STATUS <b>ONLINE</b></span><span>MODE <b>CYBER / IMMERSIVE</b></span><span>PRIMARY COLOR <b>#0B63F6</b></span><span>ACCESS <b>GRANTED</b></span></div></div></section>
+
+<section class="sec" id="sistema"><div class="wrap"><div class="sec__head ir"><div class="sec__num">01</div><span class="sec__label">System Core</span><h2>Não é uma festa. É um <em>sistema.</em></h2><p class="sec__lead">A SCP transforma a experiência de música eletrônica em um universo operacional: tecnologia, design, som e conexão funcionam como partes do mesmo sistema de entretenimento.</p></div><div class="stack">
+<div class="cols-2 ir"><div class="panel"><div class="panel__head"><span>SCP://MANIFESTO</span><span class="source-tag core">Núcleo oficial</span></div><p class="manifesto">O público não compra apenas um ingresso. Ele recebe <strong>acesso a uma experiência, a um sistema, a um universo.</strong></p></div><div class="panel"><div class="panel__head"><span>SYSTEM PARAMETERS</span><span class="source-tag core">Núcleo oficial</span></div><p class="body">A identidade deve sustentar uma experiência imersiva sem cair no futurismo genérico. O sistema é escuro, tecnológico, legível e predominantemente azul; brilho e holografia aparecem como sinais de energia, não como decoração aleatória.</p></div></div>
+<div class="ir"><div class="block-title">// Parâmetros da experiência</div><div class="param-grid"><div class="panel param"><div class="panel__head"><span>USER PROFILE</span><b>DETECTED</b></div><h4>Público</h4><ul class="data-list"><li>Público adulto (+18)</li><li>Comunidade LGBTQIAPN+</li><li>Apreciadores de música eletrônica</li><li>Busca por experiências exclusivas</li></ul></div><div class="panel param"><div class="panel__head"><span>AUDIO PROFILE</span><b>ACTIVE</b></div><h4>Som</h4><ul class="data-list"><li>Tribal House</li><li>Eletrônico</li><li>Pop Eletrônico</li><li>Psy Trance</li></ul></div></div></div>
+<div class="ir"><div class="panel"><div class="panel__head"><span>SOURCE MAP</span><span class="source-tag ext">Extensão do sistema</span></div><p class="body"><b>Regra para este guia:</b> tudo que já aparece no manual e no deck enviado é tratado como núcleo. O que faltava — grid, HUD, hierarquia, componentes, fotografia, motion e aplicações — foi estruturado a partir dessa lógica para tornar a identidade replicável sem mudar o conceito original.</p></div></div>
+</div></div></section>
+
+<section class="sec" id="linguagem"><div class="wrap"><div class="sec__head ir"><div class="sec__num">02</div><span class="sec__label">System Language</span><h2>A marca fala como uma <em>interface.</em></h2><p class="sec__lead">A linguagem verbal é parte da identidade visual. Termos cotidianos do evento são convertidos em comandos, estados, arquivos e níveis de acesso.</p></div><div class="stack">
+<div class="ir"><div class="block-title">// Dicionário oficial</div><div class="lexicon"><div class="lex-row"><span class="old">Festa</span><span class="arrow">→</span><span class="new">Sistema Operacional</span></div><div class="lex-row"><span class="old">Post</span><span class="arrow">→</span><span class="new">Tela de Interface</span></div><div class="lex-row"><span class="old">DJ</span><span class="arrow">→</span><span class="new">Arquivo de Sistema</span></div><div class="lex-row"><span class="old">Ingresso</span><span class="arrow">→</span><span class="new">Credencial de Acesso</span></div><div class="lex-row"><span class="old">Lote</span><span class="arrow">→</span><span class="new">Nível de Acesso</span></div><div class="lex-row"><span class="old">Drink</span><span class="arrow">→</span><span class="new">Protocolo</span></div><div class="lex-row"><span class="old">Story</span><span class="arrow">→</span><span class="new">Atualização do Sistema</span></div></div></div>
+<div class="voice-grid ir"><div class="panel"><div class="panel__head"><span>VOICE://USE</span><span class="source-tag ext">Extensão</span></div><div class="terminal-line">[ SYSTEM SCAN ] <b>ARTIST DETECTED</b></div><div class="terminal-line">STATUS: <b>CONFIRMED</b></div><div class="terminal-line">ACCESS LEVEL: <b>02 UNLOCKED</b></div><div class="terminal-line">SYSTEM UPDATE: <b>NEW FILE AVAILABLE</b></div></div><div class="panel"><div class="panel__head"><span>VOICE://RULES</span><span class="source-tag ext">Extensão</span></div><ul class="data-list"><li>Frases curtas, operacionais e orientadas a ação.</li><li>Inglês aparece em comandos e microtextos; português conduz a informação principal.</li><li>Use colchetes, barras, dois-pontos e status para dar ritmo de interface.</li><li>Evite jargão técnico tão complexo que atrapalhe a leitura do evento.</li></ul></div></div>
+</div></div></section>
+
+<section class="sec" id="logo"><div class="wrap"><div class="sec__head ir"><div class="sec__num">03</div><span class="sec__label">Identity File</span><h2>Logo como <em>assinatura do sistema.</em></h2><p class="sec__lead">O logo é o arquivo central da SCP. Sua presença deve ser luminosa, limpa e reconhecível; o entorno pode ser complexo, mas a assinatura não.</p></div><div class="stack">
+<div class="logo-stage ir"><img src="IMG/IMG_8161.PNG" alt="Logo SCP"></div>
+<div class="logo-variants ir"><div class="logo-v dark"><img src="IMG/IMG_8160.PNG" alt="Logo em fundo escuro"><span class="caption">PRIMARY / VOID BACKGROUND</span></div><div class="logo-v blue"><img src="IMG/IMG_8162.PNG" alt="Logo em fundo azul"><span class="caption">SYSTEM BLUE / HIGH CONTRAST</span></div></div>
+<div class="rule-grid ir"><div class="rule good"><h4>[+] Preserve</h4><ul><li>Proporção original do arquivo.</li><li>Alto contraste e área de respiro ao redor.</li><li>Aplicação sobre preto profundo ou azul escuro.</li><li>Glow controlado para reforçar energia sem borrar o desenho.</li></ul></div><div class="rule bad"><h4>[x] Evite</h4><ul><li>Distorcer, inclinar ou reconstruir a tipografia do logo.</li><li>Aplicar paleta neon multicolorida.</li><li>Adicionar contornos que alterem o desenho original.</li><li>Competir com fotos, texturas ou HUD imediatamente atrás da marca.</li></ul></div></div>
+</div></div></section>
+
+<section class="sec" id="cores"><div class="wrap"><div class="sec__head ir"><div class="sec__num">04</div><span class="sec__label">Color Protocol</span><h2>Azul é o <em>código proprietário.</em></h2><p class="sec__lead">A paleta parte do preto profundo e concentra energia nos dois azuis oficiais. O branco entrega contraste e leitura. Holografia e brilho funcionam como acentos — nunca como uma nova paleta.</p></div><div class="stack">
+<div class="swatches ir"><div class="sw" data-copy="#05060A"><div class="sw__chip" style="background:#05060A"></div><div class="sw__body"><div class="sw__name">Preto Profundo</div><div class="sw__hex">#05060A</div><div class="sw__use">Base principal, fundos e profundidade.</div></div></div><div class="sw" data-copy="#0B63F6"><div class="sw__chip" style="background:#0B63F6"></div><div class="sw__body"><div class="sw__name">Azul SCP</div><div class="sw__hex">#0B63F6</div><div class="sw__use">Cor proprietária: linhas, energia, marcação e foco.</div></div></div><div class="sw" data-copy="#2BB8FF"><div class="sw__chip" style="background:#2BB8FF"></div><div class="sw__body"><div class="sw__name">Azul Ciano</div><div class="sw__hex">#2BB8FF</div><div class="sw__use">Acento luminoso, estados ativos e highlights.</div></div></div><div class="sw" data-copy="#FFFFFF"><div class="sw__chip" style="background:#FFFFFF"></div><div class="sw__body"><div class="sw__name">Branco Sistema</div><div class="sw__hex">#FFFFFF</div><div class="sw__use">Texto principal e contraste máximo.</div></div></div></div>
+<div class="ir"><div class="block-title">// Proporção recomendada de uso</div><div class="ratio"><div class="r1">Void / Base</div><div class="r2">SCP Blue</div><div class="r3">Cyan</div><div class="r4">White</div></div><p class="body" style="margin-top:14px">A proporção é uma extensão operacional do manual: preserve a sensação de <b>ambiente escuro dominante</b>; o azul organiza a interface e o ciano sinaliza atividade. Branco é informação, não fundo dominante.</p></div>
+<div class="panel ir"><div class="panel__head"><span>COLOR WARNING</span><b>DO NOT OVERRIDE</b></div><p class="manifesto" style="font-size:clamp(1.25rem,2.6vw,2.1rem)">CYBER NÃO SIGNIFICA <strong>NEON ALEATÓRIO.</strong></p><p class="body" style="margin-top:14px">Se uma peça começa a parecer roxa, rosa, verde e azul ao mesmo tempo, o sistema perdeu sua assinatura.</p></div>
+</div></div></section>
+
+<section class="sec" id="tipo"><div class="wrap"><div class="sec__head ir"><div class="sec__num">05</div><span class="sec__label">Typography Protocol</span><h2>Duas fontes. Três <em>funções.</em></h2><p class="sec__lead">Pattanakarn constrói o universo visual. Inter garante leitura. Uma camada monoespaçada é adicionada apenas como extensão para códigos e microinformações de interface.</p></div><div class="stack">
+<div class="ir"><div class="type-spec"><div class="type-meta">DISPLAY / OFFICIAL · PATTANAKARN · TÍTULOS, LOGO, DESTAQUES HUD</div><div class="type-display">SYSTEM ONLINE 0123</div></div><div class="type-spec"><div class="type-meta">BODY / OFFICIAL · INTER · DADOS, BODY COPY, INFORMAÇÕES CONTÍNUAS</div><div class="type-body">Inter mantém o sistema legível.</div></div><div class="type-spec"><div class="type-meta">MICRO UI / SYSTEM EXTENSION · IBM PLEX MONO · CÓDIGOS, STATUS, LABELS</div><div class="type-mono">[STATUS: CONFIRMED] // 01.NOV</div></div></div>
+<div class="type-scale ir"><div class="ts"><label>H1 / Display</label><div style="font-family:var(--display);font-size:2.2rem;line-height:.95;text-transform:uppercase">WELCOME TO THE SYSTEM</div></div><div class="ts"><label>H2 / Module</label><div style="font-family:var(--display);font-size:1.45rem;color:var(--cyan-hot)">ARTIST DETECTED</div></div><div class="ts"><label>Body / Data</label><div style="font-size:.95rem;color:#a3bdc8">Informação contínua deve permanecer simples, clara e respirável.</div></div><div class="ts"><label>Micro / HUD</label><div style="font-family:var(--mono);font-size:.66rem;color:var(--cyan);letter-spacing:.08em">SCP://SYSTEM_SCAN/STATUS_ACTIVE</div></div></div>
+</div></div></section>
+
+<section class="sec" id="hud"><div class="wrap"><div class="sec__head ir"><div class="sec__num">06</div><span class="sec__label">HUD Architecture</span><h2>O elemento proprietário é a <em>interface.</em></h2><p class="sec__lead">Frames, linhas, recortes e informação técnica formam o HUD. Eles não devem virar molduras decorativas repetidas: cada elemento precisa parecer ter uma função.</p></div><div class="stack">
+<div class="hud-kit ir"><div class="hud-demo"><div class="brackets"></div><span class="mini">MODULE 01</span><h4>Brackets & Frames</h4><p>Recortes assimétricos criam contêineres e áreas de foco.</p></div><div class="hud-demo"><div class="circuit"></div><span class="mini">MODULE 02</span><h4>Circuit Grid</h4><p>Linhas técnicas aparecem em baixa opacidade, criando profundidade e conexão.</p></div><div class="hud-demo"><span class="mini">MODULE 03</span><h4>Audio Data</h4><p>Waveforms aproximam a linguagem visual da música.</p><img class="wave-img" src="IMG/waveform.png" alt="Waveform azul"></div></div>
+<div class="cols-3 ir"><div class="panel"><div class="panel__head"><span>FRAME</span><b>18PX CUT</b></div><p class="body">Cantos recortados, não arredondados. O corte comunica precisão e tecnologia.</p></div><div class="panel"><div class="panel__head"><span>LINE</span><b>1PX / LOW ALPHA</b></div><p class="body">Use linhas finas e brilho mínimo. O glow enfatiza estados ativos, não tudo ao mesmo tempo.</p></div><div class="panel"><div class="panel__head"><span>DATA</span><b>FUNCTION FIRST</b></div><p class="body">Microtextos, índices e indicadores devem sugerir função real: status, gênero, data, acesso, horário.</p></div></div>
+</div></div></section>
+
+<section class="sec" id="arquitetura"><div class="wrap"><div class="sec__head ir"><div class="sec__num">07</div><span class="sec__label">Information Architecture</span><h2>Antes da estética vem a <em>hierarquia.</em></h2><p class="sec__lead">Toda peça SCP deve permitir que a pessoa entenda primeiro o evento principal e depois navegue pelos dados como se estivesse lendo uma tela de sistema.</p></div><div class="stack">
+<div class="syntax ir"><div class="syntax-card"><span class="idx">01</span><b>System label</b><code>[ SYSTEM SCAN ]</code></div><div class="syntax-card"><span class="idx">02</span><b>Primary event</b><code>ARTIST DETECTED</code></div><div class="syntax-card"><span class="idx">03</span><b>Main information</b><code>RAYKA VITTAR</code></div><div class="syntax-card"><span class="idx">04</span><b>Data fields</b><code>GENRE / STATUS / DATE</code></div><div class="syntax-card"><span class="idx">05</span><b>Brand & access</b><code>SCP · WELCOME TO THE SYSTEM</code></div></div>
+<div class="panel ir"><div class="panel__head"><span>READING ORDER</span><b>5 LAYERS MAX</b></div><p class="body">A interface pode parecer complexa, mas a leitura não pode ser. <b>Uma peça = uma ação principal.</b> Dados auxiliares devem reforçar o universo sem competir com nome, data, CTA ou anúncio.</p></div>
+</div></div></section>
+
+<section class="sec" id="componentes"><div class="wrap"><div class="sec__head ir"><div class="sec__num">08</div><span class="sec__label">UI Component Library</span><h2>Componentes para o <em>dia a dia.</em></h2><p class="sec__lead">A identidade ganha consistência quando anúncios, lotes, lineup e CTAs compartilham a mesma gramática visual.</p></div><div class="stack"><div class="comp-grid ir">
+<div class="comp"><div class="comp-label">Artist Detection Card</div><div class="artist-ui"><div class="scan">[ SYSTEM SCAN ]<br>ARTIST DETECTED</div><strong>RENAN ALVES</strong><div class="row"><span>GENRE</span><b>TRIBAL</b></div><div class="row"><span>STATUS</span><b>CONFIRMED</b></div></div></div>
+<div class="comp"><div class="comp-label">Access Credential</div><div class="access-card"><small>SCP ACCESS PROTOCOL</small><div class="codebig">LEVEL 02</div><small>STATUS: UNLOCKED<br>VALIDATION: ACTIVE</small></div><div style="margin-top:18px"><button class="btn">Unlock access</button></div></div>
+<div class="comp"><div class="comp-label">Status / System Update</div><div class="terminal-line">STATUS: <b>ONLINE</b></div><div class="terminal-line">LINEUP FILE: <b>UPDATED</b></div><div class="terminal-line">ACCESS: <b>LIMITED</b></div><div class="terminal-line">PROTOCOL: <b>RUNNING</b></div></div>
+</div></div></div></section>
+
+<section class="sec" id="imagem"><div class="wrap"><div class="sec__head ir"><div class="sec__num">09</div><span class="sec__label">Image Processing</span><h2>Pessoas dentro do <em>sistema.</em></h2><p class="sec__lead">A fotografia é o elemento humano da SCP. O tratamento deve integrar o artista ao universo azul sem apagar fisionomia, pele, roupa ou presença.</p></div><div class="photo-grid ir"><div class="photo-demo"><img src="IMG/dj.jpeg" alt="Exemplo de tratamento de artista"><div class="photo-ui"><span>[ SUBJECT DETECTED ]</span></div></div><div class="stack" style="gap:16px"><div class="panel"><div class="panel__head"><span>PHOTO RULE 01</span><b>CUTOUT</b></div><p class="body">Recortes podem receber rim light azul/ciano e glow externo moderado, como já aparece nas peças do deck.</p></div><div class="panel"><div class="panel__head"><span>PHOTO RULE 02</span><b>COLOR</b></div><p class="body">Reduza cores concorrentes e direcione luz para azuis. Evite transformar pele em ciano chapado ou aplicar duotone agressivo.</p></div><div class="panel"><div class="panel__head"><span>PHOTO RULE 03</span><b>DEPTH</b></div><p class="body">HUD deve entrar à frente e atrás do recorte em camadas diferentes para integrar pessoa e interface.</p></div></div></div></div></section>
+
+<section class="sec" id="motion"><div class="wrap"><div class="sec__head ir"><div class="sec__num">10</div><span class="sec__label">Motion Protocol</span><h2>O sistema precisa parecer <em>vivo.</em></h2><p class="sec__lead">Movimento reforça a metáfora operacional: scanning, loading, pulse e cursor são comportamentos naturais da marca.</p></div><div class="motion-grid ir"><div class="motion m-scan"><h4>Scan</h4><div class="m-center">DETECTING</div></div><div class="motion m-load"><h4>Loading</h4><div class="m-center">72%</div></div><div class="motion m-pulse"><h4>Pulse</h4><div class="m-center">ONLINE</div></div><div class="motion m-cursor"><h4>Cursor</h4><div class="m-center">READY</div></div></div><div class="panel ir" style="margin-top:18px"><div class="panel__head"><span>MOTION RULE</span><span class="source-tag ext">Extensão</span></div><p class="body">Motion deve comunicar <b>estado</b>, não distração. Glitch é exceção — útil para transições, falhas ou reveals. Se tudo pisca, nada parece importante.</p></div></div></section>
+
+<section class="sec" id="layout"><div class="wrap"><div class="sec__head ir"><div class="sec__num">11</div><span class="sec__label">Layout Grid</span><h2>Complexidade visual, <em>ordem estrutural.</em></h2><p class="sec__lead">O sistema pode ter muitos sinais técnicos, mas precisa manter zonas claras: identificação, foco, informação e assinatura.</p></div><div class="layout-demo ir"><div class="layout-zone hero-zone"><span class="zone z1">SYSTEM LABEL</span><span class="zone z2">STATUS</span><span class="zone z3">DATA / CTA</span><span class="zone z4">SCP SIGNATURE</span><strong>ONE MAIN<br><b>MESSAGE</b></strong></div><div class="layout-zone"><span class="zone z1">SECONDARY DATA</span><div style="margin-top:62px" class="terminal-line">DATE: <b>01/NOV</b></div><div class="terminal-line">CITY: <b>PIRACICABA/SP</b></div><div class="terminal-line">STATUS: <b>ACTIVE</b></div><div class="terminal-line">ACCESS: <b>LIMITED</b></div></div></div></div></section>
+
+<section class="sec" id="aplicacoes"><div class="wrap"><div class="sec__head ir"><div class="sec__num">12</div><span class="sec__label">System Screens</span><h2>A identidade em <em>aplicação.</em></h2><p class="sec__lead">Exemplos conceituais para mostrar como a gramática se mantém em formatos diferentes sem transformar tudo na mesma peça.</p></div><div class="apps ir">
+<div class="app"><div class="app__frame story"><div class="app__hud"></div><div class="app__top">[ SYSTEM UPDATE ]</div><div class="app__main"><small>ACCESS LEVEL 02</small><h5>NOVO LOTE<br><b>DESBLOQUEADO.</b></h5></div></div><div class="app__body"><b>Story / Access</b><p>CTA e venda traduzidos para nível de acesso.</p></div></div>
+<div class="app"><div class="app__frame"><div class="app__hud"></div><div class="app__top">[ SYSTEM SCAN ]</div><div class="app__main"><small>ARTIST DETECTED</small><h5>JESSICA<br><b>ARAÚJO</b></h5></div></div><div class="app__body"><b>Feed / Artist</b><p>Nome é protagonista; status e gênero são dados.</p></div></div>
+<div class="app"><div class="app__frame"><div class="app__hud"></div><div class="app__top">SCP://LINEUP.FILE</div><div class="lineup-mini"><div><span>14:00</span><b>DJ NAME</b><i>TRIBAL</i></div><div><span>15:00</span><b>DJ NAME</b><i>HOUSE</i></div><div><span>16:00</span><b>DJ NAME</b><i>POP</i></div><div><span>17:00</span><b>DJ NAME</b><i>PSY</i></div></div><div class="app__main"><h5>LINEUP <b>LOADED.</b></h5></div></div><div class="app__body"><b>Feed / Lineup</b><p>Informação densa organizada como arquivo.</p></div></div>
+<div class="app"><div class="app__frame"><div class="app__hud"></div><div class="app__top">CREDENTIAL://SCP</div><div class="app__main"><small>01/NOV · PIRACICABA/SP</small><h5>ACCESS<br><b>GRANTED.</b></h5></div></div><div class="app__body"><b>Credential / Ticket</b><p>Ingresso vira objeto do universo da marca.</p></div></div>
+</div></div></section>
+
+<section class="sec" id="regras"><div class="wrap"><div class="sec__head ir"><div class="sec__num">13</div><span class="sec__label">Quality Control</span><h2>Checklist antes de <em>publicar.</em></h2><p class="sec__lead">A consistência da SCP não depende de repetir um layout. Depende de manter os mesmos princípios em qualquer tela.</p></div><div class="checklist ir"><div class="check ok"><h3>System compliant ✓</h3><ul><li>Preto profundo domina a composição.</li><li>Azul SCP e ciano estruturam foco e atividade.</li><li>Pattanakarn é usada em títulos e destaques.</li><li>Inter mantém informação longa legível.</li><li>HUD parece funcional, não apenas decorativo.</li><li>Existe uma mensagem principal clara.</li><li>A linguagem verbal pertence ao universo do sistema.</li><li>Glow é controlado e hierárquico.</li></ul></div><div class="check no"><h3>System error ×</h3><ul><li>Paleta neon multicolorida.</li><li>Excesso de glow em todos os elementos.</li><li>HUD encostando ou atravessando informação essencial.</li><li>Vários estilos futuristas misturados na mesma peça.</li><li>Microtexto aleatório sem função ou significado.</li><li>Foto tão tratada que perde identidade humana.</li><li>Glitch contínuo prejudicando leitura.</li><li>Interface complexa com hierarquia confusa.</li></ul></div></div></div></section>
+
+<section class="sec" id="tokens"><div class="wrap"><div class="sec__head ir"><div class="sec__num">14</div><span class="sec__label">Design Tokens</span><h2>Código para <em>reuso.</em></h2><p class="sec__lead">Os tokens abaixo permitem reproduzir rapidamente o núcleo do sistema em páginas, landing pages, dashboards e protótipos digitais.</p></div><div class="code ir"><div class="code__bar"><span>SCP://DESIGN_TOKENS.CSS</span><button id="copyTokens">COPY CSS</button></div><pre id="tokenBlock">:root{
+  --void:#05060A;
+  --void-2:#080D16;
+  --panel:#071421;
+  --scp:#0B63F6;
+  --cyan:#2BB8FF;
+  --cyan-hot:#63F6FF;
+  --white:#FFFFFF;
+  --ice:#DDF8FF;
+  --muted:#87A8B7;
+  --line:rgba(43,184,255,.28);
+  --line-hot:rgba(99,246,255,.72);
+  --glass:rgba(7,20,33,.68);
+  --success:#65F2CF;
+  --danger:#FF5D79;
+  --display:&#x27;Pattanakarn&#x27;,system-ui,sans-serif;
+  --body:&#x27;Inter&#x27;,system-ui,sans-serif;
+  --mono:&#x27;IBM Plex Mono&#x27;,ui-monospace,monospace;
+  --maxw:1240px;
+  --pad:clamp(20px,5vw,72px);
+  --cut:18px;
+  --ease:cubic-bezier(.2,.7,.2,1);
+}</pre></div></div></section>
+
+<footer><div class="wrap"><div class="foot"><img src="IMG/IMG_8160.PNG" alt="SCP"><p>SCP VISUAL SYSTEM v1.0 · SUNSET CYBER PARTY<br>SYSTEM ONLINE · ACCESS GRANTED</p></div></div></footer>
+<div class="toast" id="toast">COPIED</div>
+<script>
+(function(){
+ const boot=document.getElementById('boot'); const skip=document.getElementById('bootSkip');
+ function closeBoot(){boot.classList.add('off')} skip.addEventListener('click',closeBoot); setTimeout(closeBoot,1100);
+ const hdr=document.getElementById('hdr'),prog=document.getElementById('progress');
+ function scrollUI(){hdr.classList.toggle('scrolled',scrollY>36);const h=document.documentElement.scrollHeight-innerHeight;prog.style.width=(h?scrollY/h*100:0)+'%'} scrollUI();addEventListener('scroll',scrollUI,{passive:true});
+ const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.1});document.querySelectorAll('.ir').forEach(el=>io.observe(el));
+ const toast=document.getElementById('toast');let tt;function notify(t){toast.textContent=t;toast.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>toast.classList.remove('show'),1300)}
+ function cp(t){if(navigator.clipboard)navigator.clipboard.writeText(t).then(()=>notify(t+' COPIED')).catch(()=>notify('COPY READY'));else notify(t)}
+ document.querySelectorAll('.sw').forEach(s=>s.addEventListener('click',()=>cp(s.dataset.copy)));
+ document.getElementById('copyTokens').addEventListener('click',()=>{const t=document.getElementById('tokenBlock').innerText;navigator.clipboard?.writeText(t);notify('CSS TOKENS COPIED')});
+})();
+</script>
+</body></html>
